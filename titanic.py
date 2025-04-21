@@ -66,42 +66,85 @@ sns.histplot(data=TrainingData, x="Age", bins=15, kde=False).set_title(
 plt.show()
 
 ## Encoder les données imputées ou transformées.
-numeric_features = ["Age", "Fare"]
-categorical_features = ["Embarked", "Sex"]
+def create_pipeline(
+    n_trees: int,
+    numeric_features: list = ["Age", "Fare"],
+    categorical_features: list = ["Embarked", "Sex"],
+    max_depth: int = None,
+    max_features: str = "sqrt",
+) -> Pipeline :
+    """
+    Create a pipeline for preprocessing and model definition
 
-numeric_transformer = Pipeline(
-    steps=[
-        ("imputer", SimpleImputer(strategy="median")),
-        ("scaler", MinMaxScaler()),
-    ]
-)
+    Params:
+        n_trees : The number of trees in the random forest
+        numeric_features: The numeric features used in the pipeline
+        categorical_features: The categorical features used in the pipeline
+        max_depth : The maximum depth to the forest. Default is "None"
+        max_features: the maximum number of features used when looking for \
+            the best split. Default is "sqrt"
 
-categorical_transformer = Pipeline(
-    steps=[
-        ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("onehot", OneHotEncoder()),
-    ]
-)
+    Returns:
+        pipe : the Pipeline object
+
+    """
+    # Variables quantitatives
+    numeric_transformer = Pipeline(
+        steps=[
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scaler", MinMaxScaler()),
+        ]
+    )
+
+    # Variables qualitatives
+    categorical_transformer = Pipeline(
+        steps=[
+            ("imputer", SimpleImputer(strategy="most_frequent")),
+            ("onehot", OneHotEncoder()),
+        ]
+    )
+
+    # Preprocessing
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("Preprocessing numerical", numeric_transformer, numeric_features),
+            (
+                "Preprocessing categorical",
+                categorical_transformer,
+                categorical_features,
+            ),
+        ]
+    )
+
+    # Pipeline
+    pipe = Pipeline(
+        [
+            ("preprocessor", preprocessor),
+            ("classifier", RandomForestClassifier(n_estimators=20)),
+        ]
+    )
+    return pipe
 
 
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("Preprocessing numerical", numeric_transformer, numeric_features),
-        (
-            "Preprocessing categorical",
-            categorical_transformer,
-            categorical_features,
-        ),
-    ]
-)
+def evaluate_model(
+    pipe: Pipeline,
+    X_test: pd.DataFrame,
+    y_test: pd.DataFrame
+) -> tuple:
+    """
+    Evaluate the model by calculating the score and confusion matrix
 
-pipe = Pipeline(
-    [
-        ("preprocessor", preprocessor),
-        ("classifier", RandomForestClassifier(n_estimators=20)),
-    ]
-)
+    Params:
+        pipe: the trained pipeline object
+        X_test: the test data
+        y_test: the true labels from test data
 
+    Returns:
+        tuple: A tuple containing the score and confusion matrix
+    """
+    score = pipe.score(X_test, y_test)
+    matrix = confusion_matrix(y_test, pipe.predict(X_test))
+    return score, matrix
 
 # splitting samples
 y = TrainingData["Survived"]
