@@ -13,6 +13,17 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import confusion_matrix
+from dotenv import load_dotenv
+
+load_dotenv()
+
+jeton_api = os.environ.get("JETON_API", "")
+
+if jeton_api.startswith("$"):
+    print("API token has been configured properly")
+else:
+    print("API token has not been configured")
+
 
 os.chdir("/home/onyxia/work/titanic_to_production")
 TrainingData = pd.read_csv("data.csv")
@@ -106,9 +117,6 @@ X = TrainingData.drop("Survived", axis="columns")
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 pd.concat([X_train, y_train], axis=1).to_csv("train.csv")
 pd.concat([X_test, y_test], axis=1).to_csv("test.csv")
-
-JETONAPI = "$trotskitueleski1917"
-
 
 # Random Forest
 # Ici demandons d'avoir 20 arbres
