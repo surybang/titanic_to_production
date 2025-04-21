@@ -1,7 +1,10 @@
-"""Module titanic.py"""
+"""
+Prédiction de la survie d'un individu sur le titanic
+"""
 
 import os
 import argparse
+from dotenv import load_dotenv
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -13,44 +16,37 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import confusion_matrix
-from dotenv import load_dotenv
 
+
+# ENVIRONNEMENT CONFIG ---------------------------
 load_dotenv()
 
-jeton_api = os.environ.get("JETON_API", "")
+parser = argparse.ArgumentParser(description="Combien d'arbres ?")
+parser.add_argument(
+    "--n_trees", type=int, default=20, help="Nombre d'arbres à utiliser"
+)
+args = parser.parse_args()
+print(f"Nombre d'arbres utilisés pour la classification : {args.n_trees}")
 
+n_trees = args.n_trees
+MAX_DEPTH = None
+MAX_FEATURES = "sqrt"
+
+jeton_api = os.environ.get("JETON_API", "")
 if jeton_api.startswith("$"):
     print("API token has been configured properly")
 else:
     print("API token has not been configured")
 
-
+# Import data
 os.chdir("/home/onyxia/work/titanic_to_production")
 TrainingData = pd.read_csv("data.csv")
-
 TrainingData.head()
-
-
 TrainingData["Ticket"].str.split("/").str.len()
-
 TrainingData["Name"].str.split(",").str.len()
-
-
-# Paramètres
-parser = argparse.ArgumentParser(description="Combien d'arbres ?")
-parser.add_argument(
-    "--N_TREES", type=int, default=20, help="Nombre d'arbres à utiliser"
-)
-args = parser.parse_args()
-print(f"Nombre d'arbres utilisés pour la classification : {args.N_TREES}")
-MAX_DEPTH = None
-MAX_FEATURES = "sqrt"
-
 TrainingData.isnull().sum()
 
-
 ## Un peu d'exploration et de feature engineering
-
 ### Statut socioéconomique
 fig, axes = plt.subplots(
     1, 2, figsize=(12, 6)
