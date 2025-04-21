@@ -59,7 +59,12 @@ def create_pipeline(
     pipe = Pipeline(
         [
             ("preprocessor", preprocessor),
-            ("classifier", RandomForestClassifier(n_estimators=20)),
+            (
+                "classifier",
+                RandomForestClassifier(
+                    n_estimators=n_trees, max_depth=max_depth, max_features=max_features
+                ),
+            ),
         ]
     )
     return pipe

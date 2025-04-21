@@ -43,23 +43,18 @@ load_dotenv()
 def main():
     parser = argparse.ArgumentParser(description="Combien d'arbres ?")
     parser.add_argument(
-        "--n_trees",
-        type=int,
-        default=20,
-        help="Nombre d'arbres à utiliser"
+        "--n_trees", type=int, default=20, help="Nombre d'arbres à utiliser"
     )
     args = parser.parse_args()
     logger.info(f"Nombre d'arbres utilisés pour la classification : {args.n_trees}")
 
     n_trees = args.n_trees
-    MAX_DEPTH = None
-    MAX_FEATURES = "sqrt"
 
+    URL_RAW = "https://minio.lab.sspcloud.fr/fabienhos/titanic/data/raw/data.csv"
     jeton_api = os.environ.get("JETON_API", "")
-    data_path = os.environ.get("DATA_PATH")
-    data_path = os.environ.get("data_path", "data/raw/data.csv")
-    data_train_path = os.environ.get("train_path", "data/derived/train.csv")
-    data_test_path = os.environ.get("test_path", "data/derived/test.csv")
+    data_path = os.environ.get("data_path", URL_RAW)
+    data_train_path = os.environ.get("train_path", "data/derived/train.parquet")
+    data_test_path = os.environ.get("test_path", "data/derived/test.parquet")
 
     if not data_path:
         logger.error("DATA_PATH non configuré dans l'environnement !")
@@ -89,9 +84,9 @@ def main():
     logger.debug("Séparation train/test")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 
-    pd.concat([X_train, y_train], axis=1).to_csv(data_train_path)
-    pd.concat([X_test, y_test], axis=1).to_csv(data_test_path)
-    logger.info("Données sauvegardées dans train.csv et test.csv")
+    pd.concat([X_train, y_train], axis=1).to_parquet(data_train_path)
+    pd.concat([X_test, y_test], axis=1).to_parquet(data_test_path)
+    logger.info("Données sauvegardées dans train.parquet et test.parquet")
 
     # =========================================================================
     # PIPELINE EXECUTION

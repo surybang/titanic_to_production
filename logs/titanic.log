@@ -80,3 +80,27 @@ FileNotFoundError: [Errno 2] No such file or directory: '/work/titanic_to_produc
 2025-04-21 20:18:59.633 | DEBUG    | main:main:107 - Matrice de confusion :
 [[49  5]
  [16 20]]
+2025-04-21 20:54:12.116 | INFO     | main:main:52 - Nombre d'arbres utilisés pour la classification : 20
+2025-04-21 20:54:12.116 | SUCCESS  | main:main:69 - API token configuré correctement
+2025-04-21 20:54:12.116 | INFO     | main:main:77 - Chargement des données depuis https://minio.lab.sspcloud.fr/fabienhos/titanic/data/raw/data.csv
+2025-04-21 20:54:12.175 | DEBUG    | main:main:89 - Séparation train/test
+2025-04-21 20:54:12.229 | INFO     | main:main:94 - Données sauvegardées dans train.parquet et test.parquet
+2025-04-21 20:54:12.229 | INFO     | main:main:99 - Création de la pipeline avec 20 arbres
+2025-04-21 20:54:12.229 | INFO     | main:main:102 - Entraînement du modèle...
+2025-04-21 20:54:12.286 | INFO     | main:main:105 - Évaluation du modèle...
+2025-04-21 20:54:12.305 | SUCCESS  | main:main:108 - Performance du modèle : 81.1%
+2025-04-21 20:54:12.305 | DEBUG    | main:main:109 - Matrice de confusion :
+[[46  8]
+ [ 9 27]]
+2025-04-21 20:58:41.587 | INFO     | main:main:49 - Nombre d'arbres utilisés pour la classification : 20
+2025-04-21 20:58:41.588 | SUCCESS  | main:main:64 - API token configuré correctement
+2025-04-21 20:58:41.588 | INFO     | main:main:72 - Chargement des données depuis https://minio.lab.sspcloud.fr/fabienhos/titanic/data/raw/data.csv
+2025-04-21 20:58:41.654 | DEBUG    | main:main:84 - Séparation train/test
+2025-04-21 20:58:41.693 | INFO     | main:main:89 - Données sauvegardées dans train.parquet et test.parquet
+2025-04-21 20:58:41.693 | INFO     | main:main:94 - Création de la pipeline avec 20 arbres
+2025-04-21 20:58:41.693 | INFO     | main:main:97 - Entraînement du modèle...
+2025-04-21 20:58:41.738 | INFO     | main:main:100 - Évaluation du modèle...
+2025-04-21 20:58:41.756 | SUCCESS  | main:main:103 - Performance du modèle : 71.1%
+2025-04-21 20:58:41.757 | DEBUG    | main:main:104 - Matrice de confusion :
+[[43 14]
+ [12 21]]

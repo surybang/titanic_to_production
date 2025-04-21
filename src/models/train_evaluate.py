@@ -3,11 +3,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.pipeline import Pipeline
 
 
-def evaluate_model(
-    pipe: Pipeline,
-    X_test: pd.DataFrame,
-    y_test: pd.DataFrame
-) -> tuple:
+def evaluate_model(pipe: Pipeline, X_test: pd.DataFrame, y_test: pd.DataFrame) -> tuple:
     """
     Evaluate the model by calculating the score and confusion matrix
 
