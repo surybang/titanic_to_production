@@ -4,3 +4,5 @@ __pycache__/
 data/
 *.parquet
 logs/
+*.log
+.pytest_cache/

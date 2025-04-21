@@ -6,3 +6,4 @@ vulture
 black
 pylint
 pytest
+pytest-cov
