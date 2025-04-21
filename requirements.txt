@@ -2,3 +2,7 @@ pandas
 python-dotenv
 scikit_learn
 loguru
+vulture
+black
+pylint
+pytest
