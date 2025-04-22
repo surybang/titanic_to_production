@@ -8,9 +8,9 @@ from dotenv import load_dotenv
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from loguru import logger
+from pathlib import Path
 
-from src.pipeline.build_pipeline import create_pipeline
-from src.models.train_evaluate import evaluate_model
+from titanicml import create_pipeline, evaluate_model
 
 # =============================================================================
 # LOGGING CONFIGURATION
@@ -68,6 +68,9 @@ def main():
     # =========================================================================
     # IMPORT DATA
     # =========================================================================
+    p = Path("data/derived/")
+    p.mkdir(parents=True, exist_ok=True)
+
     try:
         logger.info("Chargement des données depuis {}", data_path)
         TrainingData = pd.read_csv(data_path)
@@ -86,7 +89,7 @@ def main():
 
     pd.concat([X_train, y_train], axis=1).to_parquet(data_train_path)
     pd.concat([X_test, y_test], axis=1).to_parquet(data_test_path)
-    logger.info("Données sauvegardées dans train.parquet et test.parquet")
+    logger.info(f"Données sauvegardées dans {data_train_path} et {data_test_path}")
 
     # =========================================================================
     # PIPELINE EXECUTION
