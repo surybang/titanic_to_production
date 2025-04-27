@@ -5,8 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 
-from src.models.train_evaluate import evaluate_model
-from src.pipeline.build_pipeline import create_pipeline
+from titanicml import create_pipeline, evaluate_model
 
 
 @pytest.fixture

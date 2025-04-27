@@ -1,20 +1,33 @@
-[tool.poetry]
+[project]
 name = "titanicml"
-version = "0.0.1"
-description = "ENSAE reproductibilité tuto ml"
-authors = ["Fabien HOS"]
-license = "MIT"
+version = "0.1.0"
+description = "Add your description here"
 readme = "README.md"
-exclude = [
-    "data/"
+requires-python = ">=3.12"
+dependencies = [
+  "pandas",
+  "python-dotenv",
+  "scikit-learn",
+  "loguru",
+  "pyarrow>=20.0.0",
+  "pytest",
 ]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[project.optional-dependencies]
+dev = [
+  "vulture",
+  "black",
+  "pylint",
+  "pytest",
+  "pytest-cov",
+]
 
-[tool.pytest.ini_options]
-log_cli = true
-log_cli_level = "WARNING"
-log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
-log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+[project.scripts]
+docs = "docs.main:main"
+
+[tool.setuptools.packages.find]
+include = ["titanicml*"]
+exclude = ["data*", "logs*", "docs*", "tests*"]
+
+[tool.uv]
+package = true
