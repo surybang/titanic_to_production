@@ -4,6 +4,7 @@ import os
 import sys
 import argparse
 from dotenv import load_dotenv
+from joblib import dump
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -105,6 +106,12 @@ def main():
 
     logger.success("Performance du modèle : {:.1%}", score)
     logger.debug("Matrice de confusion :\n{}", matrix)
+
+    logger.info("Enregistrement du modèle ...")
+    model_path = "models/titanic_model.joblib"
+    Path(model_path).parent.mkdir(parents=True, exist_ok=True)
+    dump(pipe, model_path)
+    logger.success(f"Modèle sauvegardé sous {model_path}")
 
 
 if __name__ == "__main__":

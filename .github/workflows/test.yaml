@@ -41,7 +41,7 @@ jobs:
           JETON_API: ${{ secrets.JETON_API }}
         run: |
           echo "Jeton API : $JETON_API"
-          uv run docs/main.py
+          uv run docs/train.py
 
       - name: 📤 Sauvegarder le log
         if: always()  # Même si une étape précédente échoue
