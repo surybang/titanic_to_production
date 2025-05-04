@@ -11,12 +11,15 @@ RUN apt-get update && \
 
 # Copier les fichiers nécessaires
 COPY requirements.txt .
+COPY pyproject.toml .
 COPY app ./app
 COPY docs ./docs
+COPY titanicml ./titanicml
 
 # Installer les dépendances Python
 RUN pip install --no-cache-dir -r requirements.txt
-
+RUN pip install -e .
+RUN mkdir -p models/
 # Télécharger les données
 RUN mkdir -p data/derived && \
     curl -L https://minio.lab.sspcloud.fr/fabienhos/titanic/data/raw/data.csv -o data/derived/raw_data.csv
