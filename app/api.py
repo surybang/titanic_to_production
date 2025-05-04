@@ -4,7 +4,7 @@ from joblib import load
 
 import pandas as pd
 
-model = load('docs/models/titanic_model.joblib')
+model = load('models/titanic_model.joblib')
 
 app = FastAPI(
     title="Prédiction de survie sur le Titanic",
