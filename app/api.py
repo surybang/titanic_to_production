@@ -7,7 +7,7 @@ import pandas as pd
 model = load('models/titanic_model.joblib')
 
 app = FastAPI(
-    title="Prédiction de survie sur le Titanic",
+    title="<b>Prédiction de survie sur le Titanic<b>",
     description="Application de prédiction de survie sur le Titanic 🚢 <br>Une version par API" +
     "faciliter la réutilisation du modèle 🚀")
 
