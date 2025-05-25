@@ -15,7 +15,7 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: "v.0.0.2"
+          version: "1.4.550"
 
       - name: Render Quarto project
         run: quarto render
