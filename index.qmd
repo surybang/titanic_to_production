@@ -1,0 +1,21 @@
+---
+title: "Titanic ML App"
+format: html
+page-layout: full
+---
+
+Bienvenue sur le site de démonstration de l'API **Titanic ML**, une application de machine learning déployée avec Docker & Kubernetes.
+
+---
+
+## 🎯 Objectif
+
+Cette API permet de prédire si un passager du Titanic a survécu ou non, en fonction de certaines caractéristiques. (âge, sexe, classe, etc.)
+
+---
+
+## 🚀 Lien vers l'API
+
+➡️ [Accéder à l'API](https://surybang-titanic.lab.sspcloud.fr/docs){target=_blank}
+
+---
