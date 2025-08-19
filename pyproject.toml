@@ -13,6 +13,7 @@ dependencies = [
   "pytest",
   "fastapi>=0.115.12",
   "uvicorn>=0.34.2",
+  "apache-airflow>=3.0.4",
 ]
 
 [project.optional-dependencies]
