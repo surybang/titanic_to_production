@@ -1,5 +1,26 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Titanic ML App",
+    "section": "",
+    "text": "Bienvenue sur le site de démonstration de l’API Titanic ML, une application de machine learning déployée avec Docker & Kubernetes."
+  },
+  {
+    "objectID": "index.html#objectif",
+    "href": "index.html#objectif",
+    "title": "Titanic ML App",
+    "section": "🎯 Objectif",
+    "text": "🎯 Objectif\nCette API permet de prédire si un passager du Titanic a survécu ou non, en fonction de certaines caractéristiques. (âge, sexe, classe, etc.)"
+  },
+  {
+    "objectID": "index.html#lien-vers-lapi",
+    "href": "index.html#lien-vers-lapi",
+    "title": "Titanic ML App",
+    "section": "🚀 Lien vers l’API",
+    "text": "🚀 Lien vers l’API\n➡️ Accéder à l’API"
+  },
+  {
     "objectID": "docs/notebooks/titanic.html",
     "href": "docs/notebooks/titanic.html",
     "title": "Prediction de la survie d’un individu sur le Titanic 🚢",
@@ -33,26 +54,5 @@
     "title": "Prediction de la survie d’un individu sur le Titanic 🚢",
     "section": "",
     "text": "A partir de cette analyse rapide, on va proposer les transformations suivantes:\n\nAge: il nous faut traiter les Null, on impute à la moyenne même s’il y a mieux à faire…\nEmbarked: il a 2 valeurs manquantes qu’on ajoute à la valeur la plus fréquente S\nFare : même sort que Age on impute à la moyenne\nhasCabin : Le nombre de Null étant importante on va ajouter la variable 1 ou 0 pour ne retenir que si la personne avait une cabine ou non\n\n::: {#cell-19 .cell _cell_guid=‘b954644f-19d5-4edc-acc8-cf943a58534b’ _uuid=‘74d6076bd9236daf2cefd6c32b79119f6437923d’ tags=‘[]’ execution_count=49}\n# Voila nos données d'apprentissage\nTrainingData.head()\n\n\n\n\n\n\n\n\n\nSurvived\nPclass\nName\nSex\nAge\nSibSp\nParch\nTicket\nFare\nCabin\nEmbarked\n\n\n\n\n0\n0\n3\nBraund, Mr. Owen Harris\nmale\n22.0\n1\n0\nA/5 21171\n7.2500\nNaN\nS\n\n\n1\n1\n1\nCumings, Mrs. John Bradley (Florence Briggs Th...\nfemale\n38.0\n1\n0\nPC 17599\n71.2833\nC85\nC\n\n\n2\n1\n3\nHeikkinen, Miss. Laina\nfemale\n26.0\n0\n0\nSTON/O2. 3101282\n7.9250\nNaN\nS\n\n\n3\n1\n1\nFutrelle, Mrs. Jacques Heath (Lily May Peel)\nfemale\n35.0\n1\n0\n113803\n53.1000\nC123\nS\n\n\n4\n0\n3\nAllen, Mr. William Henry\nmale\n35.0\n0\n0\n373450\n8.0500\nNaN\nS\n\n\n\n\n\n\n\n:::\n\nfrom sklearn.preprocessing import MinMaxScaler, OneHotEncoder\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.impute import SimpleImputer\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.compose import ColumnTransformer\n\nnumeric_features=[\"Age\", \"Fare\"]\ncategorical_features=[\"Embarked\", \"Sex\"]\n\nnumeric_transformer = Pipeline(steps=[(\"imputer\", SimpleImputer(strategy=\"median\")),\n(\"scaler\", MinMaxScaler()),])\n\ncategorical_transformer = Pipeline(steps=[(\"imputer\", SimpleImputer(strategy=\"most_frequent\")),(\"onehot\", OneHotEncoder()),])\n\n\npreprocessor = ColumnTransformer(\ntransformers=[\n(\"Preprocessing numerical\", numeric_transformer, numeric_features),\n(\n\"Preprocessing categorical\",\ncategorical_transformer,\ncategorical_features,\n),\n        ]\n    )\n\n\npipe = Pipeline(\n        [\n            (\"preprocessor\", preprocessor),\n            (\"classifier\", RandomForestClassifier(n_estimators=20)),\n        ]\n    )\npipe\n\nPipeline(steps=[('preprocessor',\n                 ColumnTransformer(transformers=[('Preprocessing numerical',\n                                                  Pipeline(steps=[('imputer',\n                                                                   SimpleImputer(strategy='median')),\n                                                                  ('scaler',\n                                                                   MinMaxScaler())]),\n                                                  ['Age', 'Fare']),\n                                                 ('Preprocessing categorical',\n                                                  Pipeline(steps=[('imputer',\n                                                                   SimpleImputer(strategy='most_frequent')),\n                                                                  ('onehot',\n                                                                   OneHotEncoder())]),\n                                                  ['Embarked', 'Sex'])])),\n                ('classifier', RandomForestClassifier(n_estimators=20))])In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.  Pipeline?Documentation for PipelineiNot fittedPipeline(steps=[('preprocessor',\n                 ColumnTransformer(transformers=[('Preprocessing numerical',\n                                                  Pipeline(steps=[('imputer',\n                                                                   SimpleImputer(strategy='median')),\n                                                                  ('scaler',\n                                                                   MinMaxScaler())]),\n                                                  ['Age', 'Fare']),\n                                                 ('Preprocessing categorical',\n                                                  Pipeline(steps=[('imputer',\n                                                                   SimpleImputer(strategy='most_frequent')),\n                                                                  ('onehot',\n                                                                   OneHotEncoder())]),\n                                                  ['Embarked', 'Sex'])])),\n                ('classifier', RandomForestClassifier(n_estimators=20))])  preprocessor: ColumnTransformer?Documentation for preprocessor: ColumnTransformerColumnTransformer(transformers=[('Preprocessing numerical',\n                                 Pipeline(steps=[('imputer',\n                                                  SimpleImputer(strategy='median')),\n                                                 ('scaler', MinMaxScaler())]),\n                                 ['Age', 'Fare']),\n                                ('Preprocessing categorical',\n                                 Pipeline(steps=[('imputer',\n                                                  SimpleImputer(strategy='most_frequent')),\n                                                 ('onehot', OneHotEncoder())]),\n                                 ['Embarked', 'Sex'])]) Preprocessing numerical['Age', 'Fare']  SimpleImputer?Documentation for SimpleImputerSimpleImputer(strategy='median')  MinMaxScaler?Documentation for MinMaxScalerMinMaxScaler() Preprocessing categorical['Embarked', 'Sex']  SimpleImputer?Documentation for SimpleImputerSimpleImputer(strategy='most_frequent')  OneHotEncoder?Documentation for OneHotEncoderOneHotEncoder()  RandomForestClassifier?Documentation for RandomForestClassifierRandomForestClassifier(n_estimators=20) \n\n\nOn split notre dataset d’apprentisage pour faire de la validation croisée une partie pour apprendre une partie pour regarder le score.\nPrenons arbitrairement 10% du dataset en test et 90% pour l’apprentissage.\n::: {#cell-23 .cell _cell_guid=‘b768a96d-8f55-440f-b268-26fb613acc59’ _uuid=‘dfcfa465aa94260c2db0a6c87c9dea05cc0c45de’ tags=‘[]’ execution_count=52}\ny = TrainingData[\"Survived\"]\nX = TrainingData.drop(\"Survived\", axis = 'columns')\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)\npd.concat([X_train, y_train]).to_csv(\"train.csv\")\npd.concat([X_test, y_test]).to_csv(\"test.csv\")\n:::\n\njetonapi = \"$trotskitueleski1917\""
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Titanic ML App",
-    "section": "",
-    "text": "Bienvenue sur le site de démonstration de l’API Titanic ML, une application de machine learning déployée avec Docker & Kubernetes."
-  },
-  {
-    "objectID": "index.html#objectif",
-    "href": "index.html#objectif",
-    "title": "Titanic ML App",
-    "section": "🎯 Objectif",
-    "text": "🎯 Objectif\nCette API permet de prédire si un passager du Titanic a survécu ou non, en fonction de certaines caractéristiques. (âge, sexe, classe, etc.)"
-  },
-  {
-    "objectID": "index.html#lien-vers-lapi",
-    "href": "index.html#lien-vers-lapi",
-    "title": "Titanic ML App",
-    "section": "🚀 Lien vers l’API",
-    "text": "🚀 Lien vers l’API\n➡️ Accéder à l’API"
   }
 ]
